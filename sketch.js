@@ -6,10 +6,11 @@ var madeChange = true;
 
 function setup() {
   createCanvas(600, 600, WEBGL);
+  noStroke();
 }
 
 function getHeight(x, y) {
-  return noise(x / 5, y / 5) * 200;
+  return noise(x / 10, y / 10) * 200;
 }
 
 function draw() {
@@ -18,10 +19,10 @@ function draw() {
   if (madeChange) {
     background(160, 255, 255);
     translateAndStuff();
+    directionalLight(255, 255, 255, 0.8, -0.7, 0.3);
     drawTerrain();
     madeChange = false;
   }
-  
 }
 
 function update() {
@@ -45,10 +46,10 @@ function drawTerrain() {
     for (var y = 1 + Math.floor(position[1]); y < 20 + Math.floor(position[1]); y++) {
       push();
       var height = getHeight(x, y);
-      if (height < 60) fill(0, 80, 200);
-      else if (height < 130) fill(7, 122, 30 + height / 15);
-      else if (height < 160) fill(170, 170, 170);
-      else fill(255 - height / 15, 255, 255);
+      if (height < 60) ambientMaterial(height / 3, 70 + height / 3, 200);
+      else if (height < 130) ambientMaterial(7, 122, height /2);
+      else if (height < 160) ambientMaterial(170, 170, 170);
+      else ambientMaterial(255 - height / 15, 255, 255);
       translate(x * blockSize, y * blockSize, height / 2);
       box(blockSize, blockSize, height);
       pop();
